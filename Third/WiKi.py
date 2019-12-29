@@ -1,5 +1,8 @@
 from bs4 import BeautifulSoup
 import requests
+import re
+import random
+import datetime
 
 proxies = {
     "http": "http://127.0.0.1:1080",
@@ -8,10 +11,15 @@ proxies = {
 headers = {
     'user-agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.79 Safari/537.36'
 }
-html = requests.get('https://en.wikipedia.org/wiki/Kevin_Bacon', headers=headers, proxies=proxies, timeout=5)
-bs = BeautifulSoup(html.text, 'html.parser')
-print(bs.find_all('a'))
-for link in bs.find_all('a'):
-    if 'href' in link.attrs:
-        print(link.attrs['href'])
 
+random.seed(datetime.datetime.now())
+def getLinks(articleUrl):
+    html = requests.get('http://en.wikipedia.org{}'.format(articleUrl), headers=headers, proxies=proxies, timeout=5)
+    bs = BeautifulSoup(html.text, 'html.parser')
+    return bs.find('div', {'id': 'bodyContent'}).find_all('a', href=re.compile('^(/wiki/)((?!:).)*$'))
+
+links = getLinks('/wiki/Kevin_Bacon')
+while len(links) > 0:
+    newArticle = links[random.randint(0, len(links) - 1)].attrs['href']
+    print(newArticle)
+    links = getLinks(newArticle)
