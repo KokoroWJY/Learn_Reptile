@@ -12,9 +12,11 @@ headers = {
     'user-agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.79 Safari/537.36'
 }
 
+# datetime使用系统当前时间生成random种子数
 random.seed(datetime.datetime.now())
 def getLinks(articleUrl):
-    html = requests.get('http://en.wikipedia.org{}'.format(articleUrl), headers=headers, proxies=proxies, timeout=5)
+    html = requests.get('http://en.wikipedia.org{}'.format(articleUrl), headers=headers, proxies=proxies, timeout=5,
+                        allow_redirects=True) # allow_redirects 处理重定向
     bs = BeautifulSoup(html.text, 'html.parser')
     return bs.find('div', {'id': 'bodyContent'}).find_all('a', href=re.compile('^(/wiki/)((?!:).)*$'))
 
