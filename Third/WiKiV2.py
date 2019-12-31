@@ -15,7 +15,7 @@ pages = set()  # 全局变量集合(已抓取的变量集合)
 
 def getLinks(pageUrl):
     global pages
-    html = requests.get('http://en.wikipedia.org{}'.format(pageUrl), headers=headers, proxies=proxies, timeout=100)
+    html = requests.get('http://en.wikipedia.org{}'.format(pageUrl), headers=headers, proxies=proxies, timeout=5)
     bs = BeautifulSoup(html.text, 'html.parser')
     try:
         print(bs.h1.get_text())
