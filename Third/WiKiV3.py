@@ -14,6 +14,7 @@ headers = {
 }
 
 pages = set()
+
 random.seed(datetime.datetime.now())
 
 
@@ -27,7 +28,7 @@ def getInternalLinks(bs, includeUrl):
             if link.attrs['href'] not in internalLinks:
                 if (link.attrs['href'].startswith('/')):
                     internalLinks.append(
-                        internalLinks + link.attrs['href']
+                        includeUrl + link.attrs['href']
                     )
                 else:
                     internalLinks.append(link.attrs['href'])
@@ -64,4 +65,28 @@ def followExternalOnly(startingSite):
     followExternalOnly(externalLink)
 
 
-followExternalOnly('http://oreilly.com')
+# 收集在网站上发现的所有的外链列表
+allExtLinks = set()
+allIntLinks = set()
+
+def getAllExternalLinks(siteUrl):
+    html = requests.get(siteUrl)
+    domain = '{}://{}'.format(urlparse(siteUrl).scheme, urlparse(siteUrl).netloc)
+    bs = BeautifulSoup(html.text, 'html.parser')
+    internalLinks = getInternalLinks(bs, domain)
+    externalLinks = getExternalLinks(bs, domain)
+
+    for link in externalLinks:
+        if link not in allExtLinks:
+            allExtLinks.add(link)
+            print(link)
+    for link in internalLinks:
+        if link not in allIntLinks:
+            allIntLinks.add(link)
+            getAllExternalLinks(link)
+
+allIntLinks.add('http://oreilly.com')
+getAllExternalLinks('http://oreilly.com')
+
+
+# followExternalOnly('http://oreilly.com')
