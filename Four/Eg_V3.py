@@ -19,9 +19,7 @@ class Crawler:
         """
         selectedElems = pageObj.select(selector)
         if selectedElems is not None and len(selectedElems) > 0:
-            return '\n'.join(
-                [elem.get_text() for elem in selectedElems]
-            )
+            return '\n'.join([elem.get_text() for elem in selectedElems])
         return ''
 
     def parse(self, site, url):
@@ -34,6 +32,7 @@ class Crawler:
             body = self.safeGet(bs, site.bodyTag)
             if title != '' and body != '':
                 content = Content(url, title, body)
+                content.print()
 
 
 # 以下代码定义了网站对象并开启了流程
@@ -48,8 +47,11 @@ websites = []
 for row in siteData:
     websites.append(Website(row[0], row[1], row[2], row[3]))
 
-crawler.parse(websites[0], 'http://shop.oreilly.com/product/0636920028154.do')
-crawler.parse(websites[1], 'http://www.reuters.com/article/us-usa-epa-pruitt-idUSKBN19W2D0')
+crawler.parse(websites[0],
+              'http://shop.oreilly.com/product/0636920028154.do')
+crawler.parse(websites[1],
+              'http://www.reuters.com/article/us-usa-epa-pruitt-idUSKBN19W2D0')
 crawler.parse(websites[2],
               'http://www.brookings.edu/blog/techtank/2016/03/01/idea-to-retire-old-methods-of-policy-education/')
-crawler.parse(websites[3], 'http://www.nytimes.com/2018/01/28/business/energy-environment/oil-boom.html')
+crawler.parse(websites[3],
+              'http://www.nytimes.com/2018/01/28/business/energy-environment/oil-boom.html')

@@ -2,6 +2,7 @@ class Content:
     """
     所有文章/网页的共同基类
     """
+
     def __init__(self, url, title, body):
         self.url = url
         self.title = title
@@ -13,12 +14,14 @@ class Content:
         """
         print("URL: {}".format(self.url))
         print("TITLE: {}".format(self.title))
-        print("BODY: {}".format(self.body))
+        print("BODY: \n{}".format(self.body))
+
 
 class Website:
     """
     描述网站结构的信息
     """
+
     # 储存关于如何抓取数据的命令
     def __init__(self, name, url, titleTag, bodyTag):
         self.name = name
