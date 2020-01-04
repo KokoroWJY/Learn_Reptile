@@ -32,7 +32,7 @@ class Crawler:
             body = self.safeGet(bs, site.bodyTag)
             if title != '' and body != '':
                 content = Content(url, title, body)
-                content.print()
+                content.print()  # 调用print()方法
 
 
 # 以下代码定义了网站对象并开启了流程
