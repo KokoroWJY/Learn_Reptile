@@ -14,7 +14,7 @@ class Content:
         """
         print("URL: {}".format(self.url))
         print("TITLE: {}".format(self.title))
-        print("BODY: \n{}".format(self.body))
+        print("BODY: {}".format(self.body))
 
 
 class Website:
