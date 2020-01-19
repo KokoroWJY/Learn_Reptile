@@ -17,7 +17,8 @@ class ArticleSpider(scrapy.Spider):
             'https://en.wikipedia.org/wiki/Functional_programming'
             'https://en.wikipedia.org/wiki/Monty_Python'
         ]
-        return [scrapy.Request(url=url, callback=self.parse()) for url in urls]
+        return [scrapy.Request(url=url, callback=self.parse)
+                for url in urls]
 
     def parse(self, response):
         # 是一个用户定义回调函数, 通过callback=self.parse传递给Request对象.
