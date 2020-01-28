@@ -8,11 +8,6 @@ class ArticleSpider(CrawlSpider):
     start_urls = ['http://en.wikipedia.org/wiki/Benevolent_dictator_for_life'] # 开始的链接
     # 正则表达式.*保留所有链接 rules为链接保留提供进一步的说明
     rules = [Rule(LinkExtractor(allow=r'.*'), callback='parse_items')]
-    """
-    link_extractor: 唯一一个必选函数, 是一个LinkExtractor对象
-    callback: 用来解析网页内容的函数
-    cb_kwargs: 
-    """
 
     def parse_items(self, response):
         url = response.url
