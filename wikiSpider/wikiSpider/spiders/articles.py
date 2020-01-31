@@ -27,4 +27,3 @@ class ArticleSpider(CrawlSpider):
             print('text is: {}'.format(text))
         else:
             print('This is not an article: {}'.format(title))
-            
