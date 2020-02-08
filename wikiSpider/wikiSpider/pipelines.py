@@ -5,7 +5,20 @@
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 
+from datetime import datetime
+from string import whitespace
+import sys
+
+sys.path.append('F:/Python/python code/Learn_Reptile/wikiSpider/wikiSpider/')
+from items import Article
+
 
 class WikispiderPipeline(object):
-    def process_item(self, item, spider):
-        return item
+    def process_item(self, article, spider):
+        dateStr = article['lastUpdated']
+        article['lastUpdated'] = article['lastUpdated'].replace('This page was last edited on', '')
+        article['lastUpdated'] = article['lastUpdated'].strip()
+        article['lastUpdated'] = datetime.strptime(article['lastUpdated', '%d %B %Y, at %H:%M.'])
+        article['text'] = [line for line in article['text'] if line not in whitespace]
+        article['text'] = ''.join(article['text'])
+        return article
