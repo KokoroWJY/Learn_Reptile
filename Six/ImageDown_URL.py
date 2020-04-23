@@ -3,16 +3,17 @@ import requests
 from urllib.request import urlretrieve
 from bs4 import BeautifulSoup
 
-proxies = {
-    "http": "http://127.0.0.1:1080",
-    'https': 'http://127.0.0.1:1080'
-}
-headers = {
-    'user-agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.79 Safari/537.36'
-}
+# proxies = {
+#     "http": "http://127.0.0.1:1080",
+#     'https': 'http://127.0.0.1:1080'
+# }
+# headers = {
+#     'user-agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.79 Safari/537.36'
+# }
 
 downloadDirectory = 'downloaded'
 baseUrl = 'http://pythonscraping.com'
+
 
 def getAbsoluteURL(baseUrl, source):
     if source.startswith('http://www.'):
@@ -28,6 +29,7 @@ def getAbsoluteURL(baseUrl, source):
         return None
     return url
 
+
 def getDownloadPath(baseUrl, absoluteUrl, downloadDirectory):
     path = absoluteUrl.replace('www.', '')
     path = path.replace(baseUrl, '')
@@ -39,7 +41,8 @@ def getDownloadPath(baseUrl, absoluteUrl, downloadDirectory):
 
     return path
 
-html = requests.get('http://www.pythonscraping.com', headers=headers, proxies=proxies)
+
+html = requests.get('http://www.pythonscraping.com')
 bs = BeautifulSoup(html.text, 'html.parser')
 downloadList = bs.findAll(src=True)
 
