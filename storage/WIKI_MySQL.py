@@ -10,6 +10,7 @@ cur = conn.cursor()
 
 def insertPageIfNotExists(url):
     cur.execute('SELECT * FROM `pages` WHERE `url` = (%s)', url)
+    # rowcount 返回行数
     if cur.rowcount == 0:
         cur.execute('INSERT INTO `pages` (`url`) VALUES (%s)', url)
         conn.commit()
